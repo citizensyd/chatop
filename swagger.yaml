@@ -1,0 +1,158 @@
+swagger: '2.0'
+info:
+  title: Rental API
+  version: 1.0.0
+host: localhost:3000
+basePath: /api
+schemes:
+  - http
+paths:
+  /auth/register:
+    post:
+      summary: User Registration
+      description: Registers a new user.
+      parameters:
+        - in: body
+          name: user
+          description: User information for registration.
+          required: true
+          schema:
+            type: object
+            required:
+              - name
+              - email
+              - password
+            properties:
+              name:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        200:
+          description: Successful registration and JWT token returned.
+        400:
+          description: Invalid request.
+
+  /auth/login:
+    post:
+      summary: User Login
+      description: Logs in an existing user.
+      parameters:
+        - in: body
+          name: user
+          description: User login information.
+          required: true
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        200:
+          description: Successful login and JWT token returned.
+        401:
+          description: Unauthorized.
+
+  /messages:
+    post:
+      summary: Send a Message
+      description: Sends a new message.
+      parameters:
+        - in: body
+          name: message
+          description: Details of the message to send.
+          required: true
+          schema:
+            type: object
+            required:
+              - user_id
+              - message
+              - rental_id
+            properties:
+              user_id:
+                type: integer
+              message:
+                type: string
+              rental_id:
+                type: integer
+      responses:
+        200:
+          description: Message sent successfully.
+        400:
+          description: Invalid request.
+        401:
+          description: Unauthorized.
+
+  /auth/me:
+    get:
+      summary: Get User Information
+      description: Returns information of the logged-in user.
+      responses:
+        200:
+          description: User information.
+        401:
+          description: Unauthorized.
+
+  /rentals:
+    get:
+      summary: List of Rentals
+      description: Returns a list of all rentals.
+      responses:
+        200:
+          description: List of rentals.
+        401:
+          description: Unauthorized.
+
+  /rentals/{id}:
+    get:
+      summary: Specific Rental Details
+      description: Returns details of a specific rental.
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Rental ID
+      responses:
+        200:
+          description: Rental details.
+        401:
+          description: Unauthorized.
+
+    put:
+      summary: Update a Rental
+      description: Updates information of a specific rental.
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Rental ID
+      responses:
+        200:
+          description: Rental updated successfully.
+        401:
+          description: Unauthorized.
+
+  /user/{id}:
+    get:
+      summary: Get Specific User Information
+      description: Returns information of a specific user.
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: User ID
+      responses:
+        200:
+          description: User information.
+        401:
+          description: Unauthorized.
